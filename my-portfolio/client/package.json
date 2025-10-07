@@ -5,12 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+      "start": "react-scripts start",
+  "build": "react-scripts build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.7.0",
+    "axios": "^1.12.2",
     "lucide-react": "^0.544.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",

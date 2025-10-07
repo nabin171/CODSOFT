@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import {
   Mail,
   Phone,
@@ -23,12 +24,38 @@ const Contact = () => {
       [e.target.name]: e.target.value,
     });
   };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Form submitted:", formData);
-    alert("Message sent! (This is a demo - connect to your backend)");
+    try {
+      const response = await axios.post(
+        "/api/contact", // ✅ Use relative path
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log("Backend response:", response.data);
+      alert("Message sent successfully!");
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    } catch (error) {
+      if (error.response) {
+        console.error("Server responded with error:", error.response.data);
+        alert(
+          "Server error: " + (error.response.data.error || "Unknown error")
+        );
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+        alert(
+          "Network error. Make sure backend is running and CORS is allowed."
+        );
+      } else {
+        console.error("Error setting up request:", error.message);
+        alert("Error sending message: " + error.message);
+      }
+    }
   };
 
   const contactInfo = [
