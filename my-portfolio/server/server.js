@@ -8,10 +8,10 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 8000;
 
-// ✅ Enable CORS for all routes
-app.use(cors());
 // ✅ Parse JSON bodies
 app.use(express.json());
+// ✅ Enable CORS for all routes
+app.use(cors());
 
 // ✅ Connect to MongoDB (removed deprecated options)
 mongoose
@@ -35,5 +35,5 @@ app.use("/api/contact", contactRoutes);
 
 // ✅ Start server
 app.listen(port, () => {
-  console.log(`✅ Server running on http://localhost:${port}`);
+  console.log("✅ Server running on PORT:", +port);
 });
