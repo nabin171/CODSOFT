@@ -28,8 +28,8 @@ const Contact = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "/api/contact", // ✅ Use relative path
-        formData,
+        "http://localhost:8000/api/contact",
+        formData, // send formData directly
         {
           headers: {
             "Content-Type": "application/json",
@@ -38,20 +38,25 @@ const Contact = () => {
       );
 
       console.log("Backend response:", response.data);
+
       alert("Message sent successfully!");
       setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (error) {
+      // More detailed error logging
       if (error.response) {
+        // Server responded with a status outside 2xx
         console.error("Server responded with error:", error.response.data);
         alert(
           "Server error: " + (error.response.data.error || "Unknown error")
         );
       } else if (error.request) {
+        // Request was made but no response received
         console.error("No response received:", error.request);
         alert(
           "Network error. Make sure backend is running and CORS is allowed."
         );
       } else {
+        // Something else went wrong
         console.error("Error setting up request:", error.message);
         alert("Error sending message: " + error.message);
       }
