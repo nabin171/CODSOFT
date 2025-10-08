@@ -12,29 +12,46 @@ app.use(express.json());
 // Enable CORS
 app.use(cors());
 
-// Connect to MongoDB
-let isConnected = false; // Prevent multiple connections in serverless
-async function connectDB() {
-  if (isConnected) return;
+// MongoDB connection for serverless
+let isConnected = false;
+
+async function ensureDBConnection() {
+  if (isConnected && mongoose.connection.readyState === 1) {
+    return;
+  }
+
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
+    await connectDB();
     isConnected = true;
-    console.log("✅ MongoDB connected");
   } catch (err) {
     console.error("❌ MongoDB connection error:", err);
+    throw err;
   }
 }
 
-// Call DB connection on every function invocation
-connectDB();
+// Middleware to ensure DB connection before each request
+app.use(async (req, res, next) => {
+  try {
+    await ensureDBConnection();
+    next();
+  } catch (err) {
+    res.status(500).json({ error: "Database connection failed" });
+  }
+});
 
 // Test route
 app.get("/", (req, res) => {
-  res.send("Portfolio backend is running");
+  res.json({ message: "Portfolio backend is running ✅" });
 });
 
 // Contact routes
 app.use("/api/contact", contactRoutes);
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error("Error:", err);
+  res.status(500).json({ error: err.message || "Internal server error" });
+});
 
 // Export app for Vercel serverless
 export default app;
