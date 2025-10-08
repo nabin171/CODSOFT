@@ -1,39 +1,39 @@
 import express from "express";
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-import contactRoutes from "./routes/contact.js";
 import cors from "cors";
-dotenv.config();
+import contactRoutes from "./routes/contact.js";
 
 const app = express();
-const port = process.env.PORT || 8000;
 
-// ✅ Parse JSON bodies
+// Parse JSON bodies
 app.use(express.json());
-// ✅ Enable CORS for all routes
+
+// Enable CORS
 app.use(cors());
 
-// ✅ Connect to MongoDB (removed deprecated options)
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => console.log("✅ MongoDB connected successfully"))
-  .catch((err) => {
+// Connect to MongoDB
+let isConnected = false; // Prevent multiple connections in serverless
+async function connectDB() {
+  if (isConnected) return;
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    isConnected = true;
+    console.log("✅ MongoDB connected");
+  } catch (err) {
     console.error("❌ MongoDB connection error:", err);
-    process.exit(1); // Exit if DB connection fails
-  });
-mongoose.connection.once("open", () => {
-  console.log("Connected to DB:", mongoose.connection.name);
-});
+  }
+}
 
-// ✅ Test route to verify server is working
+// Call DB connection on every function invocation
+connectDB();
+
+// Test route
 app.get("/", (req, res) => {
-  res.send("Protfolio backend is running");
+  res.send("Portfolio backend is running");
 });
 
-// ✅ Import and use contact routes
+// Contact routes
 app.use("/api/contact", contactRoutes);
 
-// ✅ Start server
-app.listen(port, () => {
-  console.log("✅ Server running on PORT:", +port);
-});
+// Export app for Vercel serverless
+export default app;
