@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import contactRoutes from "./routes/contact.js";
+import connectDB from "./config/mongodb.js";
 
 const app = express();
 
