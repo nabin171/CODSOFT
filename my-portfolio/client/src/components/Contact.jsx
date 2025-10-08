@@ -28,7 +28,7 @@ const Contact = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/contact",
+        VITE_BACKEND_URL + "/api/contact",
         formData, // send formData directly
         {
           headers: {
