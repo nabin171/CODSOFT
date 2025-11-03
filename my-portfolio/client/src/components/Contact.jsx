@@ -28,12 +28,10 @@ const Contact = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        VITE_BACKEND_URL + "/api/contact",
-        formData, // send formData directly
+        import.meta.env.VITE_BACKEND_URL + "/api/contact",
+        formData,
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
         }
       );
 
