@@ -1,5 +1,5 @@
 import express from "express";
-import Contact from "../models/Contact.js";
+import Contact from "../models/contact.js";
 import { sendEmail } from "../utils/sendEmail.js";
 
 const router = express.Router();
