@@ -32,7 +32,7 @@ const Contact = () => {
         formData,
         {
           headers: { "Content-Type": "application/json" },
-        }
+        },
       );
 
       console.log("Backend response:", response.data);
@@ -45,13 +45,13 @@ const Contact = () => {
         // Server responded with a status outside 2xx
         console.error("Server responded with error:", error.response.data);
         alert(
-          "Server error: " + (error.response.data.error || "Unknown error")
+          "Server error: " + (error.response.data.error || "Unknown error"),
         );
       } else if (error.request) {
         // Request was made but no response received
         console.error("No response received:", error.request);
         alert(
-          "Network error. Make sure backend is running and CORS is allowed."
+          "Network error. Make sure backend is running and CORS is allowed.",
         );
       } else {
         // Something else went wrong
@@ -103,7 +103,7 @@ const Contact = () => {
   return (
     <section
       id="contact"
-      className="py-20 bg-gradient-to-b from-gray-50 to-white"
+      className="py-10 bg-gradient-to-b from-gray-50 to-white"
     >
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Header */}

@@ -16,6 +16,8 @@ const Footer = () => {
     { name: "Skills", id: "skills" },
     { name: "Projects", id: "projects" },
     { name: "Resume", id: "resume" },
+    { name: "Work Experience", id: "experience" },
+    { name: "Education", id: "education" },
     { name: "Contact", id: "contact" },
   ];
 
@@ -64,7 +66,7 @@ const Footer = () => {
               <h3 className="text-2xl font-bold">Nabin Karki</h3>
             </div>
             <p className="text-gray-400 mb-6 leading-relaxed max-w-md">
-              A passionate MERN Stack Developer from Nepal, dedicated to
+              A passionate Full Stack Developer from Nepal, dedicated to
               creating beautiful, functional web applications that make a
               difference.
             </p>

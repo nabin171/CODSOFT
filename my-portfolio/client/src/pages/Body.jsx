@@ -30,17 +30,12 @@ const Body = () => {
             <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-xl">
               I'm a passionate{" "}
               <span className="font-semibold text-gray-900">
-                MERN Stack Developer
+                Full Stack Developer
               </span>{" "}
               and Technology Enthusiast based in Nepal. I focus on building
               modern, user-friendly and scalable web applications through clean
               code and thoughtful design.
             </p>
-
-            {/* CTA Button */}
-            <button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-full px-8 py-4 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 w-fit">
-              Say Hello! 👋
-            </button>
           </div>
 
           {/* Stats Cards */}
@@ -80,7 +75,7 @@ const Body = () => {
 
             {/* Image Container */}
             <div className="relative">
-              <div className="bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-500 p-1 rounded-3xl shadow-2xl">
+              <div className="bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-500 mt-4 rounded-3xl shadow-2xl">
                 <img
                   src={profilePicture}
                   alt="Nabin Karki"
@@ -95,7 +90,7 @@ const Body = () => {
                     <span className="text-2xl">💻</span>
                   </div>
                   <div>
-                    <p className="font-bold text-gray-900">MERN Stack</p>
+                    <p className="font-bold text-gray-900">Full Stack</p>
                     <p className="text-xs text-gray-600">Developer</p>
                   </div>
                 </div>

@@ -6,30 +6,47 @@ import {
   FaNodeJs,
   FaPython,
 } from "react-icons/fa";
+
 import {
   SiExpress,
   SiMongodb,
   SiCplusplus,
   SiJavascript,
+  SiWordpress,
+  SiDocker,
+  SiTailwindcss,
+  SiKubernetes,
+  SiPostman,
+  SiNextdotjs,
+  SiVite,
 } from "react-icons/si";
 
 const skills = [
   { name: "HTML", Icon: FaHtml5 },
   { name: "CSS", Icon: FaCss3Alt },
-  { name: "Express", Icon: SiExpress },
   { name: "JavaScript", Icon: SiJavascript },
   { name: "React", Icon: FaReact },
   { name: "Node.js", Icon: FaNodeJs },
+  { name: "Express", Icon: SiExpress },
   { name: "MongoDB", Icon: SiMongodb },
   { name: "C++", Icon: SiCplusplus },
   { name: "Python", Icon: FaPython },
+
+  // New ones 👇
+  { name: "WordPress", Icon: SiWordpress },
+  { name: "Docker", Icon: SiDocker },
+  { name: "Tailwind CSS", Icon: SiTailwindcss },
+  { name: "Kubernetes", Icon: SiKubernetes },
+  { name: "Postman", Icon: SiPostman },
+  { name: "Next.js", Icon: SiNextdotjs },
+  { name: "Vite", Icon: SiVite },
 ];
 
 const Skills = () => {
   return (
     <section
       id="skills"
-      className="py-20 bg-gradient-to-b from-gray-100 to-white"
+      className="py-10 bg-gradient-to-b from-gray-100 to-white"
     >
       <div className="max-w-6xl mx-auto px-6 text-center">
         {/* Heading */}
@@ -39,6 +56,7 @@ const Skills = () => {
             Skills
           </span>
         </h2>
+
         <p className="text-lg text-gray-600 mb-12">
           Technologies and tools I have worked with
         </p>
@@ -47,12 +65,13 @@ const Skills = () => {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8">
           {skills.map((skill, index) => {
             const Icon = skill.Icon;
+
             return (
               <div
                 key={index}
                 className="bg-white rounded-2xl shadow-md p-6 text-lg font-semibold text-gray-700 
-                           transition duration-300 transform hover:-translate-y-3 hover:scale-105 
-                           hover:bg-blue-600 hover:text-white group flex flex-col items-center gap-4"
+                transition duration-300 transform hover:-translate-y-3 hover:scale-105 
+                hover:bg-blue-600 hover:text-white group flex flex-col items-center gap-4"
               >
                 <Icon
                   size={48}

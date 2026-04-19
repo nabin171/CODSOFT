@@ -27,7 +27,7 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-20 bg-white">
+    <section id="about" className="py-10 bg-white">
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Header */}
         <div className="text-center mb-16">
@@ -79,7 +79,7 @@ const About = () => {
               <p>
                 I'm a passionate{" "}
                 <span className="font-semibold text-gray-900">
-                  MERN Stack Developer
+                  Full Stack Developer
                 </span>{" "}
                 from Nepal with over 2 years of experience in building modern
                 web applications. I specialize in creating responsive,
