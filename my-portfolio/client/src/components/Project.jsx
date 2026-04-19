@@ -1,4 +1,3 @@
-
 import React from "react";
 import { ExternalLink, Github } from "lucide-react";
 
@@ -65,7 +64,7 @@ const projects = [
     description:
       "A major project developed at Kantipur Engineering College. Collaborated with a team of three members to design and implement an AI-based virtual try-on system that allows users to visualize clothing items in real time.",
     image:
-      "https://images.unsplash.com/photo-1521335629791-ce4aec67dd47?w=800&h=600&fit=crop",
+      "https://plugins-media.makeupar.com/smb/blog/post/2025-05-16/bbc0f646-3c8e-4379-8cae-198a7a9a49fb.jpg",
     technologies: ["React", "Python", "PostgreSQL", "Chart.js"],
     githubLink: "https://github.com/nabin171",
     liveLink: "https://dlytica.com",
