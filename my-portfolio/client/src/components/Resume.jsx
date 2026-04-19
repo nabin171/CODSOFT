@@ -18,8 +18,8 @@ const Resume = () => {
           </p>
 
           <a
-            href="/Nabin_karki_resume.pdf"
-            download="Nabin_Karki_Resume.pdf"
+            href="/Nabin_karki_CV.pdf"
+            download="Nabin_Karki_CV.pdf"
             className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold px-8 py-4 rounded-full hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
           >
             <Download size={20} />
