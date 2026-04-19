@@ -1,1 +1,1 @@
-# CODSOFT
+This is personal portfolio where you can view my links to projects as well download my CV. If someone wants to collaborate with me you can directly email me. Email will be available in the contact section.
