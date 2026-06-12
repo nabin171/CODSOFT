@@ -1,33 +1,34 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import Body from "./Body";
+import About from "../components/About";
 import Skills from "../components/Skills";
 import Projects from "../components/Project";
-import Contact from "../components/Contact";
-import About from "../components/About";
-import Resume from "../components/Resume";
-import Footer from "../components/Footer";
 import WorkExperience from "../components/WorkExperience";
 import Education from "../components/Education";
+import Resume from "../components/Resume";
+import Contact from "../components/Contact";
+import Footer from "../components/Footer";
 
 const Home = () => {
   return (
-    <div>
+    <div className="relative">
       <Navbar />
 
-      <section id="home">
-        <Body />
-      </section>
+      <main>
+        <section id="home">
+          <Body />
+        </section>
 
-      <Skills />
+        <About />
+        <Skills />
+        <Projects />
+        <WorkExperience />
+        <Education />
+        <Resume />
+        <Contact />
+      </main>
 
-      <Projects />
-      <About />
-
-      <Resume />
-      <WorkExperience />
-      <Education />
-      <Contact />
       <Footer />
     </div>
   );

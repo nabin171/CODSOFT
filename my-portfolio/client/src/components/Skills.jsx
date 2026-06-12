@@ -6,7 +6,6 @@ import {
   FaNodeJs,
   FaPython,
 } from "react-icons/fa";
-
 import {
   SiExpress,
   SiMongodb,
@@ -20,65 +19,58 @@ import {
   SiNextdotjs,
   SiVite,
 } from "react-icons/si";
+import SectionHeading from "./SectionHeading";
+import Reveal from "./Reveal";
 
 const skills = [
-  { name: "HTML", Icon: FaHtml5 },
-  { name: "CSS", Icon: FaCss3Alt },
-  { name: "JavaScript", Icon: SiJavascript },
-  { name: "React", Icon: FaReact },
-  { name: "Node.js", Icon: FaNodeJs },
-  { name: "Express", Icon: SiExpress },
-  { name: "MongoDB", Icon: SiMongodb },
-  { name: "C++", Icon: SiCplusplus },
-  { name: "Python", Icon: FaPython },
-
-  // New ones 👇
-  { name: "WordPress", Icon: SiWordpress },
-  { name: "Docker", Icon: SiDocker },
-  { name: "Tailwind CSS", Icon: SiTailwindcss },
-  { name: "Kubernetes", Icon: SiKubernetes },
-  { name: "Postman", Icon: SiPostman },
-  { name: "Next.js", Icon: SiNextdotjs },
-  { name: "Vite", Icon: SiVite },
+  { name: "HTML", Icon: FaHtml5, color: "#e34f26" },
+  { name: "CSS", Icon: FaCss3Alt, color: "#1572b6" },
+  { name: "JavaScript", Icon: SiJavascript, color: "#f7df1e" },
+  { name: "React", Icon: FaReact, color: "#61dafb" },
+  { name: "Node.js", Icon: FaNodeJs, color: "#5fa04e" },
+  { name: "Express", Icon: SiExpress, color: "#0f172a" },
+  { name: "MongoDB", Icon: SiMongodb, color: "#47a248" },
+  { name: "C++", Icon: SiCplusplus, color: "#00599c" },
+  { name: "Python", Icon: FaPython, color: "#3776ab" },
+  { name: "WordPress", Icon: SiWordpress, color: "#21759b" },
+  { name: "Docker", Icon: SiDocker, color: "#2496ed" },
+  { name: "Tailwind CSS", Icon: SiTailwindcss, color: "#38bdf8" },
+  { name: "Kubernetes", Icon: SiKubernetes, color: "#326ce5" },
+  { name: "Postman", Icon: SiPostman, color: "#ff6c37" },
+  { name: "Next.js", Icon: SiNextdotjs, color: "#0f172a" },
+  { name: "Vite", Icon: SiVite, color: "#a855f7" },
 ];
 
 const Skills = () => {
   return (
     <section
       id="skills"
-      className="py-10 bg-gradient-to-b from-gray-100 to-white"
+      className="relative overflow-hidden px-6 py-24 md:py-32"
     >
-      <div className="max-w-6xl mx-auto px-6 text-center">
-        {/* Heading */}
-        <h2 className="text-5xl font-extrabold text-gray-900 mb-4">
-          My{" "}
-          <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-            Skills
-          </span>
-        </h2>
+      <div className="mx-auto max-w-6xl">
+        <SectionHeading
+          eyebrow="Tech Stack"
+          title="Tools I build"
+          accent="with"
+          subtitle="A versatile toolkit spanning front-end, back-end, and DevOps — the technologies I reach for to ship great products."
+        />
 
-        <p className="text-lg text-gray-600 mb-12">
-          Technologies and tools I have worked with
-        </p>
-
-        {/* Skills Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
           {skills.map((skill, index) => {
             const Icon = skill.Icon;
-
             return (
-              <div
-                key={index}
-                className="bg-white rounded-2xl shadow-md p-6 text-lg font-semibold text-gray-700 
-                transition duration-300 transform hover:-translate-y-3 hover:scale-105 
-                hover:bg-blue-600 hover:text-white group flex flex-col items-center gap-4"
-              >
-                <Icon
-                  size={48}
-                  className="text-blue-600 group-hover:text-white transition duration-300"
-                />
-                <span>{skill.name}</span>
-              </div>
+              <Reveal key={skill.name} delay={(index % 4) * 70}>
+                <div className="card-hover group flex h-full flex-col items-center gap-4 rounded-2xl glass p-6">
+                  <Icon
+                    size={42}
+                    style={{ color: skill.color }}
+                    className="transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <span className="font-display text-sm font-semibold text-slate-700">
+                    {skill.name}
+                  </span>
+                </div>
+              </Reveal>
             );
           })}
         </div>

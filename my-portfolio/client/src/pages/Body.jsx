@@ -1,100 +1,139 @@
 import React from "react";
+import { ArrowUpRight, Download, Github, Linkedin, Sparkles } from "lucide-react";
 import profilePicture from "../assets/profile_img.png";
+import resume from "/Nabin_Karki_CV.pdf";
+
+const stats = [
+  { value: "2+", label: "Years Experience" },
+  { value: "20+", label: "Projects Shipped" },
+  { value: "10+", label: "Happy Clients" },
+];
+
+const scrollTo = (id) => {
+  const el = document.getElementById(id);
+  if (el)
+    window.scrollTo({
+      top: el.getBoundingClientRect().top + window.pageYOffset - 80,
+      behavior: "smooth",
+    });
+};
 
 const Body = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center px-6 py-20">
-      <div className="max-w-7xl w-full grid md:grid-cols-2 gap-12 items-center">
-        {/* Left Content */}
-        <div className="flex flex-col gap-8 order-2 md:order-1">
-          <div className="flex flex-col gap-6">
-            {/* Greeting Badge */}
-            <div className="inline-flex items-center gap-2 bg-white rounded-full px-4 py-2 shadow-sm w-fit">
-              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-              <span className="text-sm font-medium text-gray-700">
-                Available for work
+    <div className="relative flex min-h-screen items-center px-6 pb-20 pt-32">
+      <div className="mx-auto grid w-full max-w-7xl items-center gap-16 lg:grid-cols-[1.1fr_0.9fr]">
+        {/* Left content */}
+        <div className="flex flex-col gap-8 text-center lg:text-left">
+          <div className="flex justify-center lg:justify-start">
+            <span className="eyebrow animate-fade-up">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
               </span>
-            </div>
-
-            {/* Main Heading */}
-            <div className="space-y-2">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900">
-                Hello, I'm
-              </h1>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                Nabin Karki
-              </h1>
-            </div>
-
-            {/* Description */}
-            <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-xl">
-              I'm a passionate{" "}
-              <span className="font-semibold text-gray-900">
-                Full Stack Developer
-              </span>{" "}
-              and Technology Enthusiast based in Nepal. I focus on building
-              modern, user-friendly and scalable web applications through clean
-              code and thoughtful design.
-            </p>
+              Available for new projects
+            </span>
           </div>
 
-          {/* Stats Cards */}
-          <div className="grid grid-cols-3 gap-4 mt-4">
-            <div className="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center justify-center gap-2 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-gray-100">
-              <span className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                2+
-              </span>
-              <span className="text-xs md:text-sm text-gray-600 text-center font-medium">
-                Years Experience
-              </span>
-            </div>
-            <div className="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center justify-center gap-2 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-gray-100">
-              <span className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                20+
-              </span>
-              <span className="text-xs md:text-sm text-gray-600 text-center font-medium">
-                Projects
-              </span>
-            </div>
-            <div className="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center justify-center gap-2 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-gray-100">
-              <span className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                10+
-              </span>
-              <span className="text-xs md:text-sm text-gray-600 text-center font-medium">
-                Happy Clients
-              </span>
-            </div>
+          <div className="space-y-3">
+            <p className="font-display text-lg font-medium text-slate-500">
+              Hello, I'm
+            </p>
+            <h1 className="font-display text-5xl font-extrabold leading-[1.05] tracking-tight text-slate-900 sm:text-6xl lg:text-7xl">
+              Nabin Karki
+            </h1>
+            <h2 className="text-balance text-2xl font-bold text-gradient sm:text-3xl lg:text-4xl">
+              Full Stack Developer
+            </h2>
+          </div>
+
+          <p className="mx-auto max-w-xl text-balance text-base leading-relaxed text-slate-600 md:text-lg lg:mx-0">
+            I craft modern, performant and scalable web applications with{" "}
+            <span className="font-semibold text-slate-900">React</span>,{" "}
+            <span className="font-semibold text-slate-900">Next.js</span> and the{" "}
+            <span className="font-semibold text-slate-900">MERN stack</span> —
+            blending clean code with thoughtful, pixel-perfect design.
+          </p>
+
+          {/* CTAs */}
+          <div className="flex flex-wrap justify-center gap-4 lg:justify-start">
+            <button onClick={() => scrollTo("projects")} className="btn-primary">
+              View my work <ArrowUpRight size={18} />
+            </button>
+            <a href={resume} download="Nabin_Karki_CV.pdf" className="btn-ghost">
+              <Download size={18} /> Download CV
+            </a>
+          </div>
+
+          {/* Socials */}
+          <div className="flex items-center justify-center gap-4 lg:justify-start">
+            <span className="text-sm text-slate-500">Find me on</span>
+            <div className="h-px w-8 bg-slate-300" />
+            {[
+              { Icon: Github, link: "https://github.com/nabin171" },
+              {
+                Icon: Linkedin,
+                link: "https://www.linkedin.com/in/nabin-karki-22a872203/",
+              },
+            ].map(({ Icon, link }, i) => (
+              <a
+                key={i}
+                href={link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="grid h-10 w-10 place-items-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-300 hover:text-brand-600"
+              >
+                <Icon size={18} />
+              </a>
+            ))}
+          </div>
+
+          {/* Stats */}
+          <div className="mt-2 grid grid-cols-3 gap-4 border-t border-slate-200 pt-8">
+            {stats.map((s) => (
+              <div key={s.label} className="text-center lg:text-left">
+                <div className="font-display text-3xl font-bold text-slate-900 md:text-4xl">
+                  {s.value}
+                </div>
+                <div className="mt-1 text-xs font-medium text-slate-500 md:text-sm">
+                  {s.label}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Right Image */}
-        <div className="order-1 md:order-2 flex justify-center">
-          <div className="relative group">
-            {/* Gradient Background Blob */}
-            <div className="absolute -inset-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-3xl blur-2xl opacity-30 group-hover:opacity-40 transition-opacity duration-300"></div>
+        {/* Right - portrait */}
+        <div className="relative mx-auto w-full max-w-md lg:mx-0">
+          <div className="group relative">
+            {/* Glow */}
+            <div className="absolute -inset-6 rounded-[2.5rem] bg-accent-gradient opacity-20 blur-3xl transition-opacity duration-500 group-hover:opacity-30" />
 
-            {/* Image Container */}
-            <div className="relative">
-              <div className="bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-500 mt-4 rounded-3xl shadow-2xl">
-                <img
-                  src={profilePicture}
-                  alt="Nabin Karki"
-                  className="w-full h-full max-w-md md:max-w-lg rounded-3xl object-cover"
-                />
-              </div>
+            {/* Image card */}
+            <div className="relative overflow-hidden rounded-[2.1rem] border border-slate-200 bg-white shadow-card">
+              <img
+                src={profilePicture}
+                alt="Nabin Karki"
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+              />
+            </div>
 
-              {/* Floating Badge */}
-              <div className="absolute -bottom-6 -right-6 bg-white rounded-2xl shadow-xl p-4 transform group-hover:scale-110 transition-transform duration-300">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center">
-                    <span className="text-2xl">💻</span>
-                  </div>
-                  <div>
-                    <p className="font-bold text-gray-900">Full Stack</p>
-                    <p className="text-xs text-gray-600">Developer</p>
-                  </div>
-                </div>
+            {/* Floating badge - role */}
+            <div className="absolute -bottom-5 -left-5 flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-3 pr-5 shadow-card animate-float">
+              <span className="grid h-11 w-11 place-items-center rounded-xl bg-accent-gradient">
+                <Sparkles size={20} className="text-white" />
+              </span>
+              <div className="text-left">
+                <p className="font-display text-sm font-bold text-slate-900">
+                  Open to work
+                </p>
+                <p className="text-xs text-slate-500">Remote · Worldwide</p>
               </div>
+            </div>
+
+            {/* Floating badge - tech */}
+            <div className="absolute -right-4 top-8 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-card animate-float [animation-delay:-3s]">
+              <p className="font-display text-xl font-bold text-gradient">{"</>"}</p>
+              <p className="text-[11px] font-medium text-slate-500">Clean Code</p>
             </div>
           </div>
         </div>

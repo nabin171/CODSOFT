@@ -1,119 +1,113 @@
 import React from "react";
 import { Code2, Lightbulb, Target, Heart } from "lucide-react";
+import SectionHeading from "./SectionHeading";
+import Reveal from "./Reveal";
+
+const highlights = [
+  {
+    icon: Code2,
+    title: "Clean Code",
+    description: "Maintainable, scalable code following industry best practices.",
+  },
+  {
+    icon: Lightbulb,
+    title: "Problem Solver",
+    description: "Turning complex problems into simple, elegant solutions.",
+  },
+  {
+    icon: Target,
+    title: "Goal-Oriented",
+    description: "Focused on delivering results that exceed expectations.",
+  },
+  {
+    icon: Heart,
+    title: "Passionate",
+    description: "Always eager to learn and master new technologies.",
+  },
+];
+
+const roles = [
+  { emoji: "💻", label: "Developer" },
+  { emoji: "🎨", label: "Designer" },
+  { emoji: "🚀", label: "Innovator" },
+  { emoji: "⚡", label: "Fast Learner" },
+];
 
 const About = () => {
-  const highlights = [
-    {
-      icon: Code2,
-      title: "Clean Code",
-      description:
-        "Writing maintainable and scalable code following best practices",
-    },
-    {
-      icon: Lightbulb,
-      title: "Problem Solver",
-      description: "Turning complex problems into simple, elegant solutions",
-    },
-    {
-      icon: Target,
-      title: "Goal-Oriented",
-      description: "Focused on delivering results that exceed expectations",
-    },
-    {
-      icon: Heart,
-      title: "Passionate",
-      description: "Love what I do and always eager to learn new technologies",
-    },
-  ];
-
   return (
-    <section id="about" className="py-10 bg-white">
-      <div className="max-w-6xl mx-auto px-6">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-extrabold text-gray-900 mb-4">
-            About{" "}
-            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              Me
-            </span>
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Get to know more about who I am and what I do
-          </p>
-        </div>
+    <section id="about" className="px-6 py-24 md:py-32">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeading
+          eyebrow="About Me"
+          title="The story behind"
+          accent="the code"
+          subtitle="Get to know who I am, what drives me, and how I approach building for the web."
+        />
 
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          {/* Left Side - Image/Visual */}
-          <div className="relative">
-            <div className="relative group">
-              <div className="absolute -inset-4 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
-              <div className="relative bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl p-12 shadow-xl">
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="bg-white rounded-2xl p-6 shadow-md transform hover:scale-105 transition-transform">
-                    <div className="text-4xl mb-2">💻</div>
-                    <h3 className="font-bold text-gray-900">Developer</h3>
+        <div className="grid items-center gap-12 lg:grid-cols-2">
+          {/* Visual */}
+          <Reveal>
+            <div className="relative">
+              <div className="absolute -inset-4 rounded-3xl bg-accent-gradient opacity-10 blur-2xl" />
+              <div className="relative grid grid-cols-2 gap-5 rounded-3xl border border-slate-200 bg-white p-6 shadow-card md:p-8">
+                {roles.map((r) => (
+                  <div
+                    key={r.label}
+                    className="card-hover rounded-2xl border border-slate-200 bg-slate-50 p-6"
+                  >
+                    <div className="mb-3 text-4xl">{r.emoji}</div>
+                    <h3 className="font-display text-base font-bold text-slate-900">
+                      {r.label}
+                    </h3>
                   </div>
-                  <div className="bg-white rounded-2xl p-6 shadow-md transform hover:scale-105 transition-transform">
-                    <div className="text-4xl mb-2">🎨</div>
-                    <h3 className="font-bold text-gray-900">Designer</h3>
-                  </div>
-                  <div className="bg-white rounded-2xl p-6 shadow-md transform hover:scale-105 transition-transform">
-                    <div className="text-4xl mb-2">🚀</div>
-                    <h3 className="font-bold text-gray-900">Innovator</h3>
-                  </div>
-                  <div className="bg-white rounded-2xl p-6 shadow-md transform hover:scale-105 transition-transform">
-                    <div className="text-4xl mb-2">⚡</div>
-                    <h3 className="font-bold text-gray-900">Fast Learner</h3>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
-          </div>
+          </Reveal>
 
-          {/* Right Side - Content */}
+          {/* Content */}
           <div className="space-y-6">
-            <h3 className="text-3xl font-bold text-gray-900">
-              Hi, I'm Nabin Karki
-            </h3>
-            <div className="space-y-4 text-gray-600 leading-relaxed">
-              <p>
-                I'm a passionate{" "}
-                <span className="font-semibold text-gray-900">
-                  Full Stack Developer
-                </span>{" "}
-                from Nepal with over 2 years of experience in building modern
-                web applications. I specialize in creating responsive,
-                user-friendly interfaces and robust backend systems.
-              </p>
-              <p>
-                My journey in web development started with a curiosity about how
-                websites work, and it has evolved into a deep passion for
-                creating digital experiences that make a difference. I love
-                turning complex problems into simple, beautiful, and intuitive
-                solutions.
-              </p>
-              <p>
-                When I'm not coding, you can find me exploring new technologies,
-                contributing to open-source projects, or sharing my knowledge
-                with the developer community.
-              </p>
-            </div>
+            <Reveal delay={80}>
+              <h3 className="font-display text-2xl font-bold text-slate-900 md:text-3xl">
+                Building digital experiences that make a difference
+              </h3>
+            </Reveal>
+            <Reveal delay={140}>
+              <div className="space-y-4 leading-relaxed text-slate-600">
+                <p>
+                  I'm a passionate{" "}
+                  <span className="font-semibold text-slate-900">
+                    Full Stack Developer
+                  </span>{" "}
+                  from Nepal with 2+ years of experience building modern web
+                  applications. I specialize in responsive, user-friendly
+                  interfaces backed by robust, scalable systems.
+                </p>
+                <p>
+                  My journey started with a simple curiosity about how websites
+                  work — it grew into a deep passion for crafting digital
+                  experiences that are fast, beautiful, and intuitive.
+                </p>
+              </div>
+            </Reveal>
 
-            {/* Highlights Grid */}
-            <div className="grid grid-cols-2 gap-4 pt-6">
-              {highlights.map((item, index) => {
+            <div className="grid grid-cols-2 gap-4 pt-2">
+              {highlights.map((item, i) => {
                 const Icon = item.icon;
                 return (
-                  <div
-                    key={index}
-                    className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 hover:shadow-md transition-shadow"
-                  >
-                    <Icon className="text-blue-600 mb-2" size={24} />
-                    <h4 className="font-bold text-gray-900 text-sm mb-1">
-                      {item.title}
-                    </h4>
-                    <p className="text-xs text-gray-600">{item.description}</p>
-                  </div>
+                  <Reveal key={item.title} delay={i * 90}>
+                    <div className="card-hover h-full rounded-2xl border border-slate-200 bg-white p-5 shadow-card">
+                      <span className="mb-3 inline-grid h-10 w-10 place-items-center rounded-xl bg-brand-50 text-brand-600 ring-1 ring-brand-100">
+                        <Icon size={20} />
+                      </span>
+                      <h4 className="font-display text-sm font-bold text-slate-900">
+                        {item.title}
+                      </h4>
+                      <p className="mt-1 text-xs leading-relaxed text-slate-500">
+                        {item.description}
+                      </p>
+                    </div>
+                  </Reveal>
                 );
               })}
             </div>

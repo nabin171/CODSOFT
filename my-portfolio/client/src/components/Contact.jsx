@@ -8,7 +8,44 @@ import {
   Linkedin,
   Twitter,
   Send,
+  Loader2,
 } from "lucide-react";
+import SectionHeading from "./SectionHeading";
+import Reveal from "./Reveal";
+
+const contactInfo = [
+  {
+    icon: Mail,
+    title: "Email",
+    value: "karki0008@gmail.com",
+    link: "https://mail.google.com/mail/?view=cm&fs=1&to=karki0008@gmail.com",
+  },
+  {
+    icon: Phone,
+    title: "Phone",
+    value: "+977 9862276291",
+    link: "tel:+9779862276291",
+  },
+  {
+    icon: MapPin,
+    title: "Location",
+    value: "Kathmandu, Nepal",
+    link: null,
+  },
+];
+
+const socialLinks = [
+  { icon: Github, link: "https://github.com/nabin171", name: "GitHub" },
+  {
+    icon: Linkedin,
+    link: "https://www.linkedin.com/in/nabin-karki-22a872203/",
+    name: "LinkedIn",
+  },
+  { icon: Twitter, link: "https://twitter.com/yourusername", name: "Twitter" },
+];
+
+const inputClass =
+  "w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder-slate-400 outline-none transition-all focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -17,223 +54,161 @@ const Contact = () => {
     subject: "",
     message: "",
   });
+  const [status, setStatus] = useState("idle"); // idle | sending
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setStatus("sending");
     try {
-      const response = await axios.post(
+      await axios.post(
         import.meta.env.VITE_BACKEND_URL + "/api/contact",
         formData,
-        {
-          headers: { "Content-Type": "application/json" },
-        },
+        { headers: { "Content-Type": "application/json" } },
       );
-
-      console.log("Backend response:", response.data);
-
       alert("Message sent successfully!");
       setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (error) {
-      // More detailed error logging
       if (error.response) {
-        // Server responded with a status outside 2xx
-        console.error("Server responded with error:", error.response.data);
-        alert(
-          "Server error: " + (error.response.data.error || "Unknown error"),
-        );
+        alert("Server error: " + (error.response.data.error || "Unknown error"));
       } else if (error.request) {
-        // Request was made but no response received
-        console.error("No response received:", error.request);
-        alert(
-          "Network error. Make sure backend is running and CORS is allowed.",
-        );
+        alert("Network error. Make sure backend is running and CORS is allowed.");
       } else {
-        // Something else went wrong
-        console.error("Error setting up request:", error.message);
         alert("Error sending message: " + error.message);
       }
+    } finally {
+      setStatus("idle");
     }
   };
 
-  const contactInfo = [
-    {
-      icon: Mail,
-      title: "Mail",
-      value: "karki0008@gmail.com",
-      link: "https://mail.google.com/mail/?view=cm&fs=1&to=karki0008@gmail.com",
-      target: "_blank",
-      rel: "noopener noreferrer",
-      href: "https://mail.google.com/mail/?view=cm&fs=1&to=karki0008@gmail.com",
-      name: "Email",
-    },
-    {
-      icon: Phone,
-      title: "Phone",
-      value: "+977 9862276291",
-      link: "tel:+97798XXXXXXXX",
-    },
-    {
-      icon: MapPin,
-      title: "Location",
-      value: "Kathmandu, Nepal",
-      link: null,
-    },
-  ];
-
-  const socialLinks = [
-    { icon: Github, link: "https://github.com/nabin171", name: "GitHub" },
-    {
-      icon: Linkedin,
-      link: "https://www.linkedin.com/in/nabin-karki-22a872203/",
-      name: "LinkedIn",
-    },
-    {
-      icon: Twitter,
-      link: "https://twitter.com/yourusername",
-      name: "Twitter",
-    },
-  ];
-
   return (
-    <section
-      id="contact"
-      className="py-10 bg-gradient-to-b from-gray-50 to-white"
-    >
-      <div className="max-w-6xl mx-auto px-6">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-extrabold text-gray-900 mb-4">
-            Get In{" "}
-            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              Touch
-            </span>
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Have a project in mind or just want to say hi? Feel free to reach
-            out!
-          </p>
-        </div>
+    <section id="contact" className="px-6 py-24 md:py-32">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeading
+          eyebrow="Contact"
+          title="Let's build"
+          accent="something"
+          subtitle="Have a project in mind or just want to say hi? My inbox is always open — let's create something amazing together."
+        />
 
-        <div className="grid md:grid-cols-2 gap-12">
-          {/* Left Side - Contact Info */}
-          <div className="space-y-8">
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                Contact Information
-              </h3>
-              <div className="space-y-4">
-                {contactInfo.map((item, index) => {
-                  const Icon = item.icon;
-                  return (
-                    <div key={index} className="flex items-start gap-4 group">
-                      <div className="bg-gradient-to-br from-blue-600 to-indigo-600 p-3 rounded-xl text-white group-hover:scale-110 transition-transform">
-                        <Icon size={24} />
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-gray-900">
-                          {item.title}
-                        </h4>
-                        {item.link ? (
-                          <a
-                            href={item.link}
-                            className="text-gray-600 hover:text-blue-600 transition-colors"
-                          >
+        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+          {/* Left - info */}
+          <Reveal>
+            <div className="flex h-full flex-col gap-8 rounded-3xl border border-slate-200 bg-white p-8 shadow-card">
+              <div>
+                <h3 className="font-display text-xl font-bold text-slate-900">
+                  Contact Information
+                </h3>
+                <div className="mt-6 space-y-3">
+                  {contactInfo.map((item) => {
+                    const Icon = item.icon;
+                    const inner = (
+                      <div className="flex items-center gap-4">
+                        <span className="grid h-11 w-11 flex-shrink-0 place-items-center rounded-xl bg-brand-50 text-brand-600 ring-1 ring-brand-100">
+                          <Icon size={20} />
+                        </span>
+                        <div>
+                          <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+                            {item.title}
+                          </p>
+                          <p className="text-sm font-medium text-slate-800">
                             {item.value}
-                          </a>
-                        ) : (
-                          <p className="text-gray-600">{item.value}</p>
-                        )}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Social Links */}
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                Follow Me
-              </h3>
-              <div className="flex gap-4">
-                {socialLinks.map((social, index) => {
-                  const Icon = social.icon;
-                  return (
-                    <a
-                      key={index}
-                      href={social.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-gray-100 p-4 rounded-xl hover:bg-gradient-to-br hover:from-blue-600 hover:to-indigo-600 hover:text-white transition-all duration-300 transform hover:scale-110"
-                      title={social.name}
-                    >
-                      <Icon size={24} />
-                    </a>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Decorative Element */}
-            <div className="hidden md:block">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl blur-2xl opacity-20"></div>
-                <div className="relative bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl p-8">
-                  <p className="text-gray-700 italic">
-                    "Let's collaborate and create something amazing together!"
-                  </p>
-                  <p className="text-gray-900 font-semibold mt-4">
-                    - Nabin Karki
-                  </p>
+                    );
+                    return item.link ? (
+                      <a
+                        key={item.title}
+                        href={item.link}
+                        className="block rounded-2xl p-2 transition-colors hover:bg-slate-50"
+                      >
+                        {inner}
+                      </a>
+                    ) : (
+                      <div key={item.title} className="p-2">
+                        {inner}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
-            </div>
-          </div>
 
-          {/* Right Side - Contact Form */}
-          <div>
+              <div>
+                <h3 className="font-display text-xl font-bold text-slate-900">
+                  Follow Me
+                </h3>
+                <div className="mt-4 flex gap-3">
+                  {socialLinks.map((social) => {
+                    const Icon = social.icon;
+                    return (
+                      <a
+                        key={social.name}
+                        href={social.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title={social.name}
+                        className="grid h-12 w-12 place-items-center rounded-xl border border-slate-200 bg-white text-slate-600 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-300 hover:text-brand-600"
+                      >
+                        <Icon size={20} />
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="mt-auto rounded-2xl bg-brand-50 p-6 ring-1 ring-brand-100">
+                <p className="italic text-slate-700">
+                  "Let's collaborate and create something amazing together."
+                </p>
+                <p className="mt-3 font-display font-semibold text-slate-900">
+                  — Nabin Karki
+                </p>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Right - form */}
+          <Reveal delay={120}>
             <form
               onSubmit={handleSubmit}
-              className="bg-white rounded-3xl shadow-xl p-8 space-y-6"
+              className="space-y-5 rounded-3xl border border-slate-200 bg-white p-8 shadow-card"
             >
-              <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-2">
-                  Your Name
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 outline-none transition-all"
-                  placeholder="John Doe"
-                />
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-slate-700">
+                    Your Name
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className={inputClass}
+                    placeholder="John Doe"
+                  />
+                </div>
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-slate-700">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className={inputClass}
+                    placeholder="john@example.com"
+                  />
+                </div>
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-2">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 outline-none transition-all"
-                  placeholder="john@example.com"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-2">
+                <label className="mb-2 block text-sm font-semibold text-slate-700">
                   Subject
                 </label>
                 <input
@@ -242,13 +217,13 @@ const Contact = () => {
                   value={formData.subject}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 outline-none transition-all"
+                  className={inputClass}
                   placeholder="Project Discussion"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-2">
+                <label className="mb-2 block text-sm font-semibold text-slate-700">
                   Message
                 </label>
                 <textarea
@@ -257,20 +232,28 @@ const Contact = () => {
                   onChange={handleChange}
                   required
                   rows="5"
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 outline-none transition-all resize-none"
+                  className={`${inputClass} resize-none`}
                   placeholder="Tell me about your project..."
-                ></textarea>
+                />
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-4 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center gap-2"
+                disabled={status === "sending"}
+                className="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-70"
               >
-                <Send size={20} />
-                Send Message
+                {status === "sending" ? (
+                  <>
+                    <Loader2 size={20} className="animate-spin" /> Sending...
+                  </>
+                ) : (
+                  <>
+                    <Send size={20} /> Send Message
+                  </>
+                )}
               </button>
             </form>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

@@ -1,103 +1,129 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
+
+const navLinks = [
+  { name: "Home", id: "home" },
+  { name: "About", id: "about" },
+  { name: "Skills", id: "skills" },
+  { name: "Projects", id: "projects" },
+  { name: "Experience", id: "experience" },
+  { name: "Education", id: "education" },
+  { name: "Contact", id: "contact" },
+];
 
 const Navbar = () => {
-  const [activeLink, setActiveLink] = useState("Home");
+  const [active, setActive] = useState("home");
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  const navLinks = [
-    { name: "Home", id: "home" },
-    { name: "About", id: "about" },
-    { name: "Skills", id: "skills" },
-    { name: "Projects", id: "projects" },
-    { name: "Resume", id: "resume" },
-    { name: "Work Experience", id: "experience" },
-    { name: "Education", id: "education" },
-    { name: "Contact", id: "contact" },
-  ];
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const sections = navLinks
+      .map((l) => document.getElementById(l.id))
+      .filter(Boolean);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 },
+    );
+
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, []);
 
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
-    if (section) {
-      const navbarHeight = 80;
-      const sectionPosition =
-        section.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
-
-      window.scrollTo({
-        top: sectionPosition,
-        behavior: "smooth",
-      });
-    }
+    if (!section) return;
+    const top = section.getBoundingClientRect().top + window.pageYOffset - 80;
+    window.scrollTo({ top, behavior: "smooth" });
   };
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <div
-              className="flex items-center gap-3 group cursor-pointer"
-              onClick={() => scrollToSection("home")}
-            >
-              <div className="relative w-12 h-12">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-full group-hover:scale-110 transition-transform duration-300"></div>
-                <div className="absolute inset-0 flex items-center justify-center font-bold text-white text-lg">
-                  NK
-                </div>
-              </div>
-              <div className="font-bold text-2xl bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                Nabin Karki
-              </div>
-            </div>
+      <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4">
+        <nav
+          className={`flex w-full max-w-6xl items-center justify-between rounded-2xl px-4 py-3 transition-all duration-500 md:px-5 ${
+            scrolled
+              ? "border border-slate-200 bg-white/85 shadow-card backdrop-blur-md"
+              : "border border-transparent bg-transparent"
+          }`}
+        >
+          {/* Logo */}
+          <button
+            onClick={() => scrollToSection("home")}
+            className="group flex items-center gap-3"
+          >
+            <span className="grid h-10 w-10 place-items-center rounded-xl bg-accent-gradient font-display text-sm font-bold text-white shadow-glow transition-transform duration-300 group-hover:scale-105">
+              NK
+            </span>
+            <span className="font-display text-lg font-bold text-slate-900">
+              Nabin<span className="text-brand-600">.</span>
+            </span>
+          </button>
 
-            {/* Desktop Menu */}
-            <div className="hidden md:flex items-center gap-2 bg-gray-50 rounded-full px-2 py-2">
-              {navLinks.map((link) => (
-                <button
-                  key={link.id}
-                  onClick={() => {
-                    setActiveLink(link.name);
-                    scrollToSection(link.id);
-                  }}
-                  className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
-                    activeLink === link.name
-                      ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md"
-                      : "text-gray-600 hover:text-gray-900 hover:bg-white"
-                  }`}
-                >
-                  {link.name}
-                </button>
-              ))}
-            </div>
+          {/* Desktop links */}
+          <div className="hidden items-center gap-1 rounded-full border border-slate-200/80 bg-slate-100/70 p-1 lg:flex">
+            {navLinks.map((link) => (
+              <button
+                key={link.id}
+                onClick={() => scrollToSection(link.id)}
+                className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors duration-300 ${
+                  active === link.id
+                    ? "text-white"
+                    : "text-slate-600 hover:text-slate-900"
+                }`}
+              >
+                {active === link.id && (
+                  <span className="absolute inset-0 -z-10 rounded-full bg-accent-gradient shadow-sm" />
+                )}
+                {link.name}
+              </button>
+            ))}
+          </div>
 
-            {/* Mobile Button */}
+          {/* CTA + mobile toggle */}
+          <div className="flex items-center gap-3">
             <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden flex flex-col gap-1.5 p-2"
+              onClick={() => scrollToSection("contact")}
+              className="hidden items-center gap-1.5 rounded-full bg-accent-gradient px-5 py-2.5 text-sm font-semibold text-white shadow-glow transition-transform duration-300 hover:-translate-y-0.5 sm:flex"
             >
-              <span className="w-6 h-0.5 bg-gray-800 rounded-full"></span>
-              <span className="w-6 h-0.5 bg-gray-800 rounded-full"></span>
-              <span className="w-6 h-0.5 bg-gray-800 rounded-full"></span>
+              Let's talk <ArrowUpRight size={16} />
+            </button>
+            <button
+              onClick={() => setIsOpen((o) => !o)}
+              className="grid h-10 w-10 place-items-center rounded-xl border border-slate-200 bg-white text-slate-700 lg:hidden"
+              aria-label="Toggle menu"
+            >
+              {isOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
-        </div>
-      </nav>
+        </nav>
+      </header>
 
-      {/* Mobile Menu */}
+      {/* Mobile menu */}
       {isOpen && (
-        <div className="md:hidden fixed top-[80px] left-0 w-full bg-white border-t border-gray-200 px-6 py-4 space-y-3 shadow-md z-40">
+        <div className="fixed inset-x-4 top-20 z-40 rounded-2xl border border-slate-200 bg-white/95 p-3 shadow-card backdrop-blur-md lg:hidden">
           {navLinks.map((link) => (
             <button
               key={link.id}
               onClick={() => {
-                setActiveLink(link.name);
                 scrollToSection(link.id);
                 setIsOpen(false);
               }}
-              className={`block w-full text-left px-4 py-2 rounded-lg transition ${
-                activeLink === link.name
-                  ? "bg-blue-600 text-white"
-                  : "text-gray-700 hover:bg-gray-100"
+              className={`block w-full rounded-xl px-4 py-3 text-left text-sm font-medium transition-colors ${
+                active === link.id
+                  ? "bg-brand-50 text-brand-700"
+                  : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
               }`}
             >
               {link.name}

@@ -4,9 +4,10 @@ import {
   MapPin,
   Calendar,
   ChevronDown,
-  ChevronUp,
   ExternalLink,
 } from "lucide-react";
+import SectionHeading from "./SectionHeading";
+import Reveal from "./Reveal";
 
 const experiences = [
   {
@@ -19,16 +20,14 @@ const experiences = [
     logo: "DL",
     color: "from-blue-500 to-indigo-600",
     description:
-      "Building and maintaining enterprise-level web applications for banking and financial clients. Focused on scalable dashboard interfaces, real-time data visualization, and headless CMS integration using modern React/Next.js stack.",
+      "Building and maintaining enterprise-level web applications for banking and financial clients. Focused on scalable dashboard interfaces, real-time data visualization, and headless CMS integration using a modern React/Next.js stack.",
     responsibilities: [
       "Built enterprise-level web applications for banking and financial clients using React, Next.js, and Tailwind CSS.",
       "Developed scalable dashboard interfaces with dynamic data visualization, reusable UI components, and structured layout systems.",
-      "Integrated REST APIs using Axios and fetch to manage and display real-time financial and customer-related data.",
-      "Implemented efficient state management and conditional rendering to handle complex user flows and data-driven UI updates.",
-      "Improved website performance by optimizing image, video, and static asset loading strategies.",
-      "Utilized Next.js Server Components and Client Components for enhanced performance and clean separation of concerns.",
-      "Integrated WordPress as a headless CMS using GraphQL to manage dynamic content and backend data operations.",
-      "Resolved a long-standing Google Ads delivery issue by migrating and deploying the website under a new domain.",
+      "Integrated REST APIs using Axios and fetch to manage and display real-time financial and customer data.",
+      "Implemented efficient state management and conditional rendering to handle complex user flows.",
+      "Improved performance by optimizing image, video, and static asset loading strategies.",
+      "Integrated WordPress as a headless CMS using GraphQL to manage dynamic content.",
     ],
     technologies: [
       "React",
@@ -37,7 +36,6 @@ const experiences = [
       "Axios",
       "GraphQL",
       "WordPress",
-      "REST API",
     ],
     companyLink: "https://dlytica.com",
   },
@@ -49,9 +47,9 @@ const experiences = [
     type: "Training",
     duration: "May 2024 – Aug 2024",
     logo: "BI",
-    color: "from-violet-500 to-purple-600",
+    color: "from-sky-500 to-blue-600",
     description:
-      "Completed an intensive 1350+ hour MERN Stack training program. Built a full-featured e-commerce API with JWT authentication, pagination, and Stripe payment integration. Deployed on Render with CI/CD via GitHub Actions.",
+      "Completed an intensive 1350+ hour MERN Stack training program. Built a full-featured e-commerce API with JWT authentication, pagination, and Stripe payments, deployed on Render with CI/CD via GitHub Actions.",
     responsibilities: [
       "Completed 1350+ hours of hands-on MERN stack development training.",
       "Built a full e-commerce REST API with JWT authentication, pagination, and Stripe payment integration.",
@@ -65,7 +63,6 @@ const experiences = [
       "Node.js",
       "JWT",
       "Stripe",
-      "GitHub Actions",
     ],
     companyLink: "https://broadwayinfosys.com",
   },
@@ -77,13 +74,13 @@ const experiences = [
     type: "Internship",
     duration: "Jun 2023 – Jul 2023",
     logo: "FL",
-    color: "from-emerald-500 to-teal-600",
+    color: "from-indigo-500 to-violet-600",
     description:
       "Developed a cross-platform task management mobile app using Flutter. Implemented Provider state management, local persistence, and REST API synchronization as part of a collaborative team project.",
     responsibilities: [
       "Built a cross-platform task management app for iOS and Android using Flutter and Dart.",
       "Implemented Provider for efficient state management across the application.",
-      "Added local data persistence and REST API synchronization for seamless offline/online experience.",
+      "Added local data persistence and REST API synchronization for a seamless offline/online experience.",
       "Collaborated with teammates on feature planning and code reviews.",
     ],
     technologies: ["Flutter", "Dart", "Provider", "REST API", "Local Storage"],
@@ -92,157 +89,143 @@ const experiences = [
 ];
 
 const typeColors = {
-  "Full-time": "bg-blue-50 text-blue-600",
-  "Part-time": "bg-violet-50 text-violet-600",
-  Freelance: "bg-emerald-50 text-emerald-600",
-  Internship: "bg-orange-50 text-orange-600",
-  Training: "bg-purple-50 text-purple-600",
+  "Full-time": "bg-brand-50 text-brand-700 ring-brand-100",
+  Training: "bg-sky-50 text-sky-700 ring-sky-100",
+  Internship: "bg-indigo-50 text-indigo-700 ring-indigo-100",
 };
 
 const WorkExperience = () => {
-  const [expanded, setExpanded] = useState(null);
+  const [expanded, setExpanded] = useState(1);
   const toggle = (id) => setExpanded(expanded === id ? null : id);
 
   return (
-    <section
-      id="experience"
-      className="py-10 bg-gradient-to-b from-gray-50 to-white"
-    >
-      <div className="max-w-5xl mx-auto px-6">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-extrabold text-gray-900 mb-4">
-            Work{" "}
-            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              Experience
-            </span>
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            A timeline of my professional journey — the roles, companies, and
-            impact I've made along the way.
-          </p>
-        </div>
+    <section id="experience" className="px-6 py-24 md:py-32">
+      <div className="mx-auto max-w-5xl">
+        <SectionHeading
+          eyebrow="Career Path"
+          title="Work"
+          accent="Experience"
+          subtitle="A timeline of my professional journey — the roles, companies, and impact I've made along the way."
+        />
 
-        {/* Timeline */}
         <div className="relative">
-          <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-200 via-indigo-200 to-transparent hidden md:block" />
+          {/* Vertical line */}
+          <div className="absolute bottom-2 left-7 top-2 hidden w-px bg-gradient-to-b from-brand-400 via-slate-200 to-transparent md:block" />
 
-          <div className="flex flex-col gap-8">
-            {experiences.map((exp) => (
-              <div
-                key={exp.id}
-                className="relative flex flex-col md:flex-row gap-6 md:pl-20"
-              >
-                {/* Timeline logo */}
-                <div
-                  className={`absolute left-0 top-0 w-16 h-16 rounded-2xl bg-gradient-to-br ${exp.color} flex items-center justify-center text-white font-extrabold text-lg shadow-lg hidden md:flex z-10`}
-                >
-                  {exp.logo}
-                </div>
-
-                {/* Card */}
-                <div className="flex-1 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100">
-                  <div
-                    className="p-6 cursor-pointer select-none"
-                    onClick={() => toggle(exp.id)}
-                  >
-                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
-                      <div>
-                        <div className="flex items-center gap-2 mb-1">
-                          <div
-                            className={`w-10 h-10 rounded-xl bg-gradient-to-br ${exp.color} flex items-center justify-center text-white font-bold text-sm md:hidden`}
-                          >
-                            {exp.logo}
-                          </div>
-                          <h3 className="text-xl font-bold text-gray-900">
-                            {exp.role}
-                          </h3>
-                        </div>
-                        <div className="flex flex-wrap items-center gap-3 text-sm text-gray-500 mt-1">
-                          <span className="flex items-center gap-1 font-semibold text-gray-700">
-                            <Briefcase size={14} /> {exp.company}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <MapPin size={14} /> {exp.location}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Calendar size={14} /> {exp.duration}
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-3">
-                        <span
-                          className={`px-3 py-1 text-xs font-semibold rounded-full ${typeColors[exp.type]}`}
-                        >
-                          {exp.type}
-                        </span>
-                        <button className="text-gray-400 hover:text-gray-700 transition-colors">
-                          {expanded === exp.id ? (
-                            <ChevronUp size={20} />
-                          ) : (
-                            <ChevronDown size={20} />
-                          )}
-                        </button>
-                      </div>
+          <div className="flex flex-col gap-6">
+            {experiences.map((exp) => {
+              const open = expanded === exp.id;
+              return (
+                <Reveal key={exp.id}>
+                  <div className="relative md:pl-20">
+                    {/* Node */}
+                    <div
+                      className={`absolute left-0 top-1 hidden h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br ${exp.color} font-display text-base font-extrabold text-white shadow-glow md:grid`}
+                    >
+                      {exp.logo}
                     </div>
 
-                    <p className="text-gray-600 text-sm mt-3 leading-relaxed">
-                      {exp.description}
-                    </p>
+                    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-card card-hover">
+                      <button
+                        onClick={() => toggle(exp.id)}
+                        className="w-full cursor-pointer select-none p-6 text-left"
+                      >
+                        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                          <div>
+                            <div className="flex items-center gap-3">
+                              <div
+                                className={`grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br ${exp.color} text-sm font-bold text-white md:hidden`}
+                              >
+                                {exp.logo}
+                              </div>
+                              <h3 className="font-display text-lg font-bold text-slate-900">
+                                {exp.role}
+                              </h3>
+                            </div>
+                            <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-500">
+                              <span className="flex items-center gap-1.5 font-medium text-slate-700">
+                                <Briefcase size={14} /> {exp.company}
+                              </span>
+                              <span className="flex items-center gap-1.5">
+                                <MapPin size={14} /> {exp.location}
+                              </span>
+                              <span className="flex items-center gap-1.5">
+                                <Calendar size={14} /> {exp.duration}
+                              </span>
+                            </div>
+                          </div>
 
-                    <div className="flex flex-wrap gap-2 mt-4">
-                      {exp.technologies.map((tech, i) => (
-                        <span
-                          key={i}
-                          className="px-3 py-1 bg-blue-50 text-blue-600 text-xs font-semibold rounded-full"
-                        >
-                          {tech}
-                        </span>
-                      ))}
+                          <div className="flex items-center gap-3">
+                            <span
+                              className={`whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold ring-1 ${typeColors[exp.type]}`}
+                            >
+                              {exp.type}
+                            </span>
+                            <ChevronDown
+                              size={20}
+                              className={`text-slate-400 transition-transform duration-300 ${
+                                open ? "rotate-180" : ""
+                              }`}
+                            />
+                          </div>
+                        </div>
+
+                        <p className="mt-4 text-sm leading-relaxed text-slate-600">
+                          {exp.description}
+                        </p>
+
+                        <div className="mt-4 flex flex-wrap gap-2">
+                          {exp.technologies.map((tech) => (
+                            <span key={tech} className="pill">
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                      </button>
+
+                      {/* Expandable */}
+                      <div
+                        className={`grid transition-all duration-500 ease-out ${
+                          open
+                            ? "grid-rows-[1fr] opacity-100"
+                            : "grid-rows-[0fr] opacity-0"
+                        }`}
+                      >
+                        <div className="overflow-hidden">
+                          <div className="border-t border-slate-200 px-6 pb-6 pt-5">
+                            <h4 className="mb-3 text-xs font-bold uppercase tracking-[0.15em] text-brand-600">
+                              Key Responsibilities
+                            </h4>
+                            <ul className="space-y-2.5">
+                              {exp.responsibilities.map((item, i) => (
+                                <li
+                                  key={i}
+                                  className="flex items-start gap-3 text-sm text-slate-600"
+                                >
+                                  <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent-gradient" />
+                                  {item}
+                                </li>
+                              ))}
+                            </ul>
+                            <a
+                              href={exp.companyLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand-600 transition-colors hover:text-brand-700"
+                            >
+                              <ExternalLink size={14} /> Visit company
+                            </a>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-
-                  {expanded === exp.id && (
-                    <div className="px-6 pb-6 border-t border-gray-100 pt-4 animate-fadeIn">
-                      <h4 className="text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">
-                        Key Responsibilities
-                      </h4>
-                      <ul className="space-y-2">
-                        {exp.responsibilities.map((item, i) => (
-                          <li
-                            key={i}
-                            className="flex items-start gap-2 text-sm text-gray-600"
-                          >
-                            <span className="mt-1.5 w-2 h-2 rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 flex-shrink-0" />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                      <a
-                        href={exp.companyLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 mt-4 text-sm text-blue-600 font-semibold hover:text-indigo-600 transition-colors"
-                      >
-                        <ExternalLink size={14} /> Visit Company
-                      </a>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </div>
-
-      <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(-8px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fadeIn { animation: fadeIn 0.25s ease-out; }
-      `}</style>
     </section>
   );
 };
