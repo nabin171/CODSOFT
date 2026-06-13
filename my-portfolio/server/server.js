@@ -10,7 +10,27 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors({ origin: process.env.FRONTEND_URL || "*", credentials: true }));
+
+// Allow requests from local dev and the deployed frontend
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://nabinkarki10.com.np",
+  process.env.FRONTEND_URL,
+].filter(Boolean);
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // allow non-browser requests (curl, Postman) that send no origin
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error(`Not allowed by CORS: ${origin}`));
+      }
+    },
+    credentials: true,
+  }),
+);
 
 // MongoDB connection
 mongoose
