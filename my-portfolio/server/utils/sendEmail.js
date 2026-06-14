@@ -1,27 +1,33 @@
-import nodemailer from "nodemailer";
-
-export const sendEmail = async (name, email, subject, message) => {
-  const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: 465,
-    secure: true,
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
+// Sends mail through Brevo's HTTP API (port 443) instead of SMTP, because
+// Render blocks all outbound SMTP ports. Requires BREVO_API_KEY env var.
+const sendViaBrevo = async ({ senderName, to, subject, html }) => {
+  const res = await fetch("https://api.brevo.com/v3/smtp/email", {
+    method: "POST",
+    headers: {
+      "api-key": process.env.BREVO_API_KEY,
+      "Content-Type": "application/json",
+      accept: "application/json",
     },
-    tls: {
-      rejectUnauthorized: false,
-    },
-    connectionTimeout: 10000,
-    greetingTimeout: 10000,
-    socketTimeout: 15000,
+    body: JSON.stringify({
+      sender: { name: senderName, email: process.env.EMAIL_FROM },
+      to: [{ email: to }],
+      subject,
+      htmlContent: html,
+    }),
   });
 
+  if (!res.ok) {
+    const detail = await res.text();
+    throw new Error(`Brevo API ${res.status}: ${detail}`);
+  }
+};
+
+export const sendEmail = async (name, email, subject, message) => {
   const year = new Date().getFullYear();
 
   // ✅ Confirmation email sent to the visitor
-  await transporter.sendMail({
-    from: `"Nabin Karki" <${process.env.EMAIL_FROM}>`,
+  await sendViaBrevo({
+    senderName: "Nabin Karki",
     to: email,
     subject: `Got your message, ${name}! I'll be in touch soon.`,
     html: `
@@ -136,8 +142,8 @@ export const sendEmail = async (name, email, subject, message) => {
   });
 
   // ✅ Notification email sent to you (Nabin)
-  await transporter.sendMail({
-    from: `"Portfolio Contact" <${process.env.EMAIL_FROM}>`,
+  await sendViaBrevo({
+    senderName: "Portfolio Contact",
     to: "karki0008@gmail.com",
     subject: `New message from ${name} — Portfolio Contact`,
     html: `
