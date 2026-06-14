@@ -31,18 +31,18 @@ router.post("/", async (req, res) => {
     await newContact.save();
     console.log("✅ Contact saved successfully");
 
-    // 👉 SEND EMAIL AFTER SAVING — must not fail the request if mail breaks
-    try {
-      await sendEmail(name, email, subject, message);
-      console.log("✅ Email sent successfully");
-    } catch (mailError) {
-      console.error("⚠️ Email failed (message still saved):", mailError.message);
-    }
-
+    // Respond immediately — the user shouldn't wait on email delivery
     res.status(201).json({
       message: "Message received successfully!",
       contact: newContact,
     });
+
+    // 👉 SEND EMAIL IN THE BACKGROUND (fire-and-forget, runs after response)
+    sendEmail(name, email, subject, message)
+      .then(() => console.log("✅ Email sent successfully"))
+      .catch((mailError) =>
+        console.error("⚠️ Email failed (message still saved):", mailError.message)
+      );
   } catch (error) {
     console.error("❌ Error saving contact:", error);
     res.status(500).json({
